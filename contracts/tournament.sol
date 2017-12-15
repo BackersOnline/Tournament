@@ -8,7 +8,7 @@ pragma solidity ^0.4.18;
 // The contract definition. A constructor of the same name will be automatically called on contract creation.
 contract Tournament {
     address organizer;      // Address of the Tournament organizer - public?
-    string title;          // Tournament title (up to 32 bytes)
+    string title;          // Tournament title 
     uint entries;           // Actual number of participants
     uint maxParticipants;   // Maximum number of participants
     uint entryFee;          // Tournament fee
@@ -21,7 +21,7 @@ contract Tournament {
 
     // Participant record
     struct Participant {
-        bytes32 name;   // short name (up to 32 bytes)
+        string name;   // short name 
         uint fee;   // entree fee paid
     }
     
@@ -108,7 +108,6 @@ contract Tournament {
         prizePool = prizePool + msg.value;
     }
     
-    // for now, a single winner
     function awardPrize(address first, address second, address third, uint firstPrize, uint secondPrize, uint thirdPrize) public onlyOrganizer {
         require(participants[first].fee == entryFee); // actual paid participant
         require(participants[second].fee == entryFee);
