@@ -8,7 +8,7 @@ pragma solidity ^0.4.18;
 // The contract definition. A constructor of the same name will be automatically called on contract creation.
 contract Tournament {
     address organizer;      // Address of the Tournament organizer - public?
-    bytes32 title;          // Tournament title (up to 32 bytes)
+    string title;          // Tournament title (up to 32 bytes)
     uint entries;           // Actual number of participants
     uint maxParticipants;   // Maximum number of participants
     uint entryFee;          // Tournament fee
@@ -27,9 +27,16 @@ contract Tournament {
     
     mapping(address => Participant) public participants;    // Participant information
     address[] public participantAddresses;  // Enumerate participants by address
+
+    // Modifies a function so it only executes if the sender is the organizer
+    modifier onlyOrganizer {
+        if (msg.sender == organizer) {
+            _;
+        }
+    } 
     
     // The constructor accepts a string input and saves it to the contract's "greeting" variable.
-    function Tournament(bytes32 _title, uint32 _maxParticipants, uint _entryFee, uint _surcharge) public {
+    function Tournament(string _title, uint32 _maxParticipants, uint _entryFee, uint _surcharge) public {
         organizer = msg.sender;
         title = _title;
         maxParticipants = _maxParticipants; // for now, no minimum number
@@ -42,8 +49,13 @@ contract Tournament {
         ended = false;
     }
 
-    function tournamentTitle() public constant returns (bytes32) {
+    function tournamentTitle() public constant returns (string) {
         return title;
+    }
+    
+    // Returns the prize pool amount to calculate winning percentages outside the contract
+    function tournamentPrizePool() public view returns (uint) {
+        return prizePool;
     }
     
     // Enter Tournament, before it started, up to a maximum number of participants, once per address, with a correct fee
@@ -60,26 +72,22 @@ contract Tournament {
         prizePool = prizePool + entryFee - surcharge;
     }
     
-    function startTournament() public {
-        require(msg.sender == organizer);
+    function startTournament() public onlyOrganizer {
         require(!ended);
         started = true;
     }
 
-    function finishTournament() public {
-        require(msg.sender == organizer);
+    function finishTournament() public onlyOrganizer {
         finished = true;
     }
     
-    function endTournament() public {
-        require(msg.sender == organizer);
+    function endTournament() public onlyOrganizer {
         finished = true;
         ended = true;
     }
 
     /// Unwind the Tournament. Control over the surcharge in such an event 
-    function returnFees(uint _surcharge) public {
-        require(msg.sender == organizer);
+    function returnFees(uint _surcharge) public onlyOrganizer {
         endTournament();
         prizePool = 0;
         /// enumerate participants and send each their entryFee
@@ -95,18 +103,20 @@ contract Tournament {
         }
     }
 
-    function increasePrize() public payable {
-        require(msg.sender == organizer);
+    function increasePrize() public payable onlyOrganizer {
         require(!ended);
         prizePool = prizePool + msg.value;
     }
     
     // for now, a single winner
-    function awardPrize(address winner) public {
-        require(msg.sender == organizer);
-        require(participants[winner].fee == entryFee); // actual paid participant
+    function awardPrize(address first, address second, address third, uint firstPrize, uint secondPrize, uint thirdPrize) public onlyOrganizer {
+        require(participants[first].fee == entryFee); // actual paid participant
+        require(participants[second].fee == entryFee);
+        require(participants[third].fee == entryFee);
         endTournament();
-        winner.transfer(prizePool);    
+        first.transfer(firstPrize);
+        second.transfer(secondPrize);
+        third.transfer(thirdPrize);    
     }
 
     
@@ -114,9 +124,8 @@ contract Tournament {
      Standard kill() function to recover funds 
      **********/
     
-    function kill() public { 
-        if (msg.sender == organizer)  // only allow this action if the account sending the signal is the creator
-            selfdestruct(organizer);       // kills this contract and sends remaining funds back to creator
+    function kill() public onlyOrganizer { 
+        selfdestruct(organizer);       // kills this contract and sends remaining funds back to creator
     }
 
 }
