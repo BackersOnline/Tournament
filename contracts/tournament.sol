@@ -59,17 +59,17 @@ contract Tournament {
     }
     
     // Enter Tournament, before it started, up to a maximum number of participants, once per address, with a correct fee
-    function enterTournament(bytes32 _name) public payable {
+    function enterTournament(string _name) public payable {
         address e = msg.sender;
 
     /// Organizer allowed to enter? (msg.sender == organizer)
         require(!started && !ended && (msg.value == entryFee));
         require(entries<=maxParticipants);
         require(participants[e].fee == 0); // did not pay (enter) yet
-        participants[e].fee = entryFee;
+        participants[e].fee = msg.value;
         participants[e].name = _name;
         participantAddresses.push(e);
-        prizePool = prizePool + entryFee - surcharge;
+        prizePool = prizePool + msg.value - surcharge;
     }
     
     function startTournament() public onlyOrganizer {
@@ -125,6 +125,34 @@ contract Tournament {
     
     function kill() public onlyOrganizer { 
         selfdestruct(organizer);       // kills this contract and sends remaining funds back to creator
+    }
+
+}
+
+contract CreateTournament {
+    address[] newTournaments;
+
+    event TournamentAddress (
+        address tourny,
+        address organizer
+    ); 
+
+    function createNewTournament(string _title, uint32 _maxParticipants, uint _entryFee, uint _surcharge) public {
+        address newTournament = new Tournament(_title, _maxParticipants, _entryFee, _surcharge);
+        newTournaments.push(newTournament);
+        TournamentAddress(newTournament, msg.sender);
+    }
+
+    function checkAddress(address tournament) public view returns(bool) {
+        bool exists = false;
+
+        for (uint i = 0; i < newTournaments.length; i++) {
+            if (tournament == newTournaments[i]) {
+                exists = true;
+            }
+        }
+
+        return exists;
     }
 
 }

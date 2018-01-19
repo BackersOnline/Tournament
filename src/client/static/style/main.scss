@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Roboto:300,400');
+
+input:focus {
+  color: black;
+  outline: none;
+}
+
+.hide {
+  display: none;
+}
+
+.nav-items {
+  border: 1.8px solid black;
+  opacity: 0.6;
+}
+
+.nav-items:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.nav-headers {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+}
+
+.form-text {
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.form-margin {
+  margin-top: 5vh;
+}
+
+.btn-margin {
+  color: black;
+  margin-right: 15vw;
+}
+
+.label-margin {
+  margin-right: 1.2vw;
+}
+
+.titles {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  color: white;
+}
+
+#jumbo {
+  background-image: linear-gradient(to right, #4b74b3, #4f4f8d);
+  height: 100vh;
+}
+
+#nav {
+  background: white;
+  height: 60px;
+}
+
+#created-nav {
+  margin-left: 8vw;
+  color: white;
+  font-size: 10px;
+  opacity: 0.7;
+
+  &:hover {
+    text-decoration: underline;
+    opacity: 1;
+    cursor: pointer;
+  }
+}
