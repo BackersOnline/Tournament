@@ -9,7 +9,7 @@ hooks:
   BeforeInstall:
     - location: scripts/install-dependencies.sh
       runas: root
-  AfterInstall:
+  Install:
     - location: scripts/install-packages.sh
       runas: root
   ApplicationStart:
