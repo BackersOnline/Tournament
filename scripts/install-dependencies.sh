@@ -1,5 +1,7 @@
 sudo yum update
 
+sudo yum install -y httpd
+
 sudo yum install ruby
 sudo yum install wget
 
