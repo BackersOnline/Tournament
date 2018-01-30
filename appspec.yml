@@ -1,0 +1,20 @@
+version: 0.0
+os: linux
+files:
+  - source: /src/
+    destination: /var/www/
+permissions:
+  - object: /var/www/
+hooks:
+  BeforeInstall:
+    - location: scripts/install-dependencies.sh
+      runas: root
+  AfterInstall:
+    - location: scripts/install-packages.sh
+      runas: root
+  ApplicationStart:
+    - location: scripts/run-server.sh
+      runas: root
+  ApplicationStop:
+    - location: scripts/stop-server.sh
+      runas: root
