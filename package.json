@@ -9,7 +9,7 @@
     "webpack": "webpack",
     "start": "pm2 start --interpreter babel-node src/server/index.js",
     "stop": "pm2 stop all",
-    "dev": "webpack && yarn start"
+    "dev": "yarn webpack && yarn start"
   },
   "dependencies": {
     "express": "^4.16.2",
