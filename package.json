@@ -7,11 +7,13 @@
   "license": "MIT",
   "scripts": {
     "webpack": "webpack",
-    "start": "babel-node src/server/index.js --presets env",
+    "start": "pm2 start --interpreter babel-node src/server/index.js",
+    "stop": "pm2 stop all",
     "dev": "webpack && yarn start"
   },
   "dependencies": {
     "express": "^4.16.2",
+    "pm2": "^2.9.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
