@@ -6,7 +6,7 @@
   "author": "Nic Bonetto <nick.bonetto@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "webpack": "webpack",
+    "webpack": "webpack --config webpack.config.js",
     "start": "pm2 start --interpreter babel-node src/server/index.js",
     "stop": "pm2 stop all",
     "dev": "yarn webpack && yarn start"
