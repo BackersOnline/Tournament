@@ -7,9 +7,9 @@
   "license": "MIT",
   "scripts": {
     "webpack": "webpack",
-    "start": "pm2 start --interpreter babel-node src/server/index.js",
+    "start": "babel-node src/server/index.js --presets env",
     "stop": "pm2 stop all",
-    "dev": "webpack && yarn start"
+    "dev": "webpack && pm2 start yarn start"
   },
   "dependencies": {
     "express": "^4.16.2",
