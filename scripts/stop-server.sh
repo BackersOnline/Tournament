@@ -1,2 +1,2 @@
-cd /var/www/
+cd /var/www
 yarn stop
