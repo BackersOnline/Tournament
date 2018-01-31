@@ -4,4 +4,4 @@ fi
 
 mkdir /var/www/
 cd /var/www/
-yarn install
+sudo yarn install

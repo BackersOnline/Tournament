@@ -6,10 +6,10 @@
   "author": "Nic Bonetto <nick.bonetto@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "webpack": "webpack --config webpack.config.js",
+    "webpack": "webpack",
     "start": "pm2 start --interpreter babel-node src/server/index.js",
     "stop": "pm2 stop all",
-    "dev": "yarn webpack && yarn start"
+    "dev": "webpack && yarn start"
   },
   "dependencies": {
     "express": "^4.16.2",
