@@ -1,2 +1,2 @@
 cd /var/www/
-^C
+yarn stop
