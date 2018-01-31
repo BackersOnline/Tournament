@@ -1,2 +1,2 @@
 cd /var/www/
-yarn dev
+sudo yarn dev

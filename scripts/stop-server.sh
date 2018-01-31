@@ -1,2 +1,2 @@
 cd /var/www/
-yarn stop
+sudo yarn stop
