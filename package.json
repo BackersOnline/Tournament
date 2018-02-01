@@ -9,7 +9,8 @@
     "webpack": "webpack",
     "start": "babel-node src/server/index.js --presets env",
     "stop": "pm2 stop all",
-    "dev": "webpack && pm2 start npm -- start -i max"
+    "dev": "webpack && pm2 start npm -- start -i max",
+    "test-app": "webpack && yarn start"
   },
   "dependencies": {
     "express": "^4.16.2",
