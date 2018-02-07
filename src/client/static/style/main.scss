@@ -12,6 +12,7 @@ input:focus {
 .nav-items {
   border: 1.8px solid black;
   opacity: 0.6;
+  height: 59.6px;
 }
 
 .nav-items:hover {
@@ -22,6 +23,22 @@ input:focus {
 .nav-headers {
   font-family: 'Open Sans', sans-serif;
   font-weight: 400;
+  font-size: 25px;
+}
+
+.nav-headers a {
+  color: black;
+  opacity: 0.6;
+  text-decoration: none;
+}
+
+.nav-headers a:hover {
+  color: black;
+  opacity: 1;
+}
+
+.nav-headers:visited {
+  color: black;
 }
 
 .form-text {
@@ -50,7 +67,7 @@ input:focus {
   color: white;
 }
 
-#jumbo {
+.jumbo {
   background-image: linear-gradient(to right, #4b74b3, #4f4f8d);
   height: 100vh;
 }
