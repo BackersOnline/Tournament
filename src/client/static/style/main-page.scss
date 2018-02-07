@@ -1,0 +1,35 @@
+.main-navs-box {
+  margin-left: 900px;
+}
+
+.inline-navs {
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.inline-navs a {
+  color: white;
+  text-decoration: none;
+}
+
+.inline-navs a:hover {
+  color: white;
+}
+
+.inline-navs a:visited {
+  color: white;
+}
+
+#main-header::before {
+  background-image: linear-gradient(to right, #4b74b3, #4f4f8d);
+  background-size: cover;
+  height: 130px;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: block;
+  position: absolute;
+  z-index: -1;
+  content: '';
+}

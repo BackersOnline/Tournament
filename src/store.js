@@ -1,8 +1,10 @@
-import { createStore, combineReducers } from 'redux'
-import views from './reducers/views'
+import { createStore, combineReducers } from 'redux';
+import contractData from './reducers/contract-data';
+import signIn from './reducers/sign-in';
 
 let store = createStore(combineReducers({
-  views: views,
-}))
+  contract: contractData,
+  signIn: signIn
+}));
 
-export default store
+export default store;
