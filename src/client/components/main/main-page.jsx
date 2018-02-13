@@ -39,6 +39,8 @@ class MainPage extends Component {
               </div>
             </div>
           </div>
+          <div className="col-sm-12" id="separator">
+          </div>
         </div>
       </section>
     )
