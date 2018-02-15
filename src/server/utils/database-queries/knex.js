@@ -79,5 +79,14 @@ export function postParticipant(eventId, userId, start, end, paid, prize, note) 
 
     return query;
 };
-  
+
+export function getUser(username) {
+  const query = knex
+    .table('users')
+    .where({
+      username: username
+    });
+
+    return query;
+}
   
