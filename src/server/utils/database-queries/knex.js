@@ -8,7 +8,7 @@ const knex = Knex({
   connection: process.env.DATABASE_URL
 });
 
-export function newUser(username, email, walletAddress) {
+export function postUser(username, email, walletAddress) {
   const query = knex
     .insert({
       username: username,
@@ -20,7 +20,7 @@ export function newUser(username, email, walletAddress) {
     return query;
 };
 
-export function newEvent(organizer, title, isPublic, start, end, location, terms) {
+export function postEvent(organizer, title, isPublic, start, end, location, terms) {
   const query = knex
     .insert({
       organizer_id: organizer,
@@ -36,7 +36,7 @@ export function newEvent(organizer, title, isPublic, start, end, location, terms
     return query;
 };
 
-export function newTournament(eventId, max, buyIn, guarantee, terms) {
+export function postTournament(eventId, max, buyIn, guarantee, terms) {
   const query = knex
     .insert({
       event_id: eventId,
@@ -50,7 +50,7 @@ export function newTournament(eventId, max, buyIn, guarantee, terms) {
     return query;
 };
   
-export function newGame(eventId, max, maxBuyIn, minBuyIn, terms) {
+export function postGame(eventId, max, maxBuyIn, minBuyIn, terms) {
   const query = knex  
     .insert({
       event_id: eventId,
@@ -64,7 +64,7 @@ export function newGame(eventId, max, maxBuyIn, minBuyIn, terms) {
     return query;
 };
 
-export function newParticipant(eventId, userId, start, end, paid, prize, note) {
+export function postParticipant(eventId, userId, start, end, paid, prize, note) {
   const query = knex
     .insert({
       event_id: eventId,
