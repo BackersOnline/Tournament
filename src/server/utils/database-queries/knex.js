@@ -63,5 +63,21 @@ export function newGame(eventId, max, maxBuyIn, minBuyIn, terms) {
 
     return query;
 };
+
+export function newParticipant(eventId, userId, start, end, paid, prize, note) {
+  const query = knex
+    .insert({
+      event_id: eventId,
+      user_id: userId,
+      start_date: start,
+      end_date: end,
+      paid: paid,
+      prize: prize,
+      note: note
+    })
+    .into('participants');
+
+    return query;
+};
   
   
