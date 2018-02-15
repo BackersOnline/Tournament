@@ -5,5 +5,6 @@ CREATE TABLE notifications (
   recipient_id int,
   sender_id    int,
   event_id     int,
+  read         boolean,
   note         text
 );
