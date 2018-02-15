@@ -20,3 +20,20 @@ export function newUser(username, email, walletAddress) {
     return query;
 };
 
+export function newEvent(organizer, title, isPublic, start, end, location, terms) {
+    const query = knex
+      .insert({
+        organizer_id: organizer,
+        title: title,
+        public: isPublic,
+        start_date: start,
+        end_date: end,
+        location: location,
+        terms: terms
+      })
+      .into('events');
+  
+      return query;
+  };
+  
+  
