@@ -21,47 +21,47 @@ export function newUser(username, email, walletAddress) {
 };
 
 export function newEvent(organizer, title, isPublic, start, end, location, terms) {
-    const query = knex
-      .insert({
-        organizer_id: organizer,
-        title: title,
-        public: isPublic,
-        start_date: start,
-        end_date: end,
-        location: location,
-        terms: terms
-      })
-      .into('events');
+  const query = knex
+    .insert({
+      organizer_id: organizer,
+      title: title,
+      public: isPublic,
+      start_date: start,
+      end_date: end,
+      location: location,
+      terms: terms
+    })
+    .into('events');
   
-      return query;
+    return query;
 };
 
 export function newTournament(eventId, max, buyIn, guarantee, terms) {
   const query = knex
-      .insert({
-        event_id: eventId,
-        max_participants: max,
-        buyin: buyIn,
-        guarantee: guarantee,
-        terms: terms
-      })
-      .into('tournaments');
+    .insert({
+      event_id: eventId,
+      max_participants: max,
+      buyin: buyIn,
+      guarantee: guarantee,
+      terms: terms
+    })
+    .into('tournaments');
 
-      return query;
+    return query;
 };
   
 export function newGame(eventId, max, maxBuyIn, minBuyIn, terms) {
   const query = knex  
-  .insert({
-    event_id: eventId,
-    max_participants: max,
-    max_buyin: maxBuyIn,
-    min_buyin: minBuyIn,
-    terms: terms
-  })
-  .into('game');
+    .insert({
+      event_id: eventId,
+      max_participants: max,
+      max_buyin: maxBuyIn,
+      min_buyin: minBuyIn,
+      terms: terms
+    })
+    .into('game');
 
-  return query;
+    return query;
 };
   
   
