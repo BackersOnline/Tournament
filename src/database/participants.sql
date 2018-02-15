@@ -6,7 +6,6 @@ CREATE TABLE participants (
   user_id    int,
   start_date text,
   end_date   text,
-  note       text,
   paid       int,
   prize      int,
   note       text
