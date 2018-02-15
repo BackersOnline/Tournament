@@ -88,5 +88,5 @@ export function getUser(username) {
     });
 
     return query;
-}
+};
   
