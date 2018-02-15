@@ -34,6 +34,34 @@ export function newEvent(organizer, title, isPublic, start, end, location, terms
       .into('events');
   
       return query;
-  };
+};
+
+export function newTournament(eventId, max, buyIn, guarantee, terms) {
+  const query = knex
+      .insert({
+        event_id: eventId,
+        max_participants: max,
+        buyin: buyIn,
+        guarantee: guarantee,
+        terms: terms
+      })
+      .into('tournaments');
+
+      return query;
+};
+  
+export function newGame(eventId, max, maxBuyIn, minBuyIn, terms) {
+  const query = knex  
+  .insert({
+    event_id: eventId,
+    max_participants: max,
+    max_buyin: maxBuyIn,
+    min_buyin: minBuyIn,
+    terms: terms
+  })
+  .into('game');
+
+  return query;
+};
   
   
