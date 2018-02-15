@@ -70,11 +70,11 @@ class CreateTournament extends Component {
               </div>
               <div className="form-group">
                 <label className="label-margin">Set the Tournament Entry Fee</label>
-                <input ref="fee" type="number" className="form-control"/>
+                <input ref="fee" type="number" step="0.00000001" className="form-control"/>
               </div>
               <div className="form-group">
                 <label className="label-margin">Set the Tournament Surcharge</label>
-                <input ref="surcharge" type="number" className="form-control"/>
+                <input ref="surcharge" type="number" step="0.00000001" className="form-control"/>
               </div>
               <div className="btn-margin">
                 <button type="submit" className="btn btn-light" name="action">Create</button>
