@@ -8,72 +8,72 @@ const knex = Knex({
   connection: process.env.DATABASE_URL
 });
 
-export function postUser(username, email, walletAddress) {
+export function postUser(data) {
   const query = knex
     .insert({
-      username: username,
-      email: email,
-      default_address: walletAddress
+      username: data.username,
+      email: data.email,
+      default_address: data.walletAddress
     })
     .into('users');
 
     return query;
 };
 
-export function postEvent(organizer, title, isPublic, start, end, location, terms) {
+export function postEvent(data) {
   const query = knex
     .insert({
-      organizer_id: organizer,
-      title: title,
-      public: isPublic,
-      start_date: start,
-      end_date: end,
-      location: location,
-      terms: terms
+      organizer_id: data.organizer,
+      title: data.title,
+      public: data.isPublic,
+      start_date: data.start,
+      end_date: data.end,
+      location: data.location,
+      terms: data.terms
     })
     .into('events');
   
     return query;
 };
 
-export function postTournament(eventId, max, buyIn, guarantee, terms) {
+export function postTournament(data) {
   const query = knex
     .insert({
-      event_id: eventId,
-      max_participants: max,
-      buyin: buyIn,
-      guarantee: guarantee,
-      terms: terms
+      event_id: data.eventId,
+      max_participants: data.max,
+      buyin: data.buyIn,
+      guarantee: data.guarantee,
+      terms: data.terms
     })
     .into('tournaments');
 
     return query;
 };
   
-export function postGame(eventId, max, maxBuyIn, minBuyIn, terms) {
+export function postGame(data) {
   const query = knex  
     .insert({
-      event_id: eventId,
-      max_participants: max,
-      max_buyin: maxBuyIn,
-      min_buyin: minBuyIn,
-      terms: terms
+      event_id: data.eventId,
+      max_participants: data.max,
+      max_buyin: data.maxBuyIn,
+      min_buyin: data.minBuyIn,
+      terms: data.terms
     })
     .into('game');
 
     return query;
 };
 
-export function postParticipant(eventId, userId, start, end, paid, prize, note) {
+export function postParticipant(data) {
   const query = knex
     .insert({
-      event_id: eventId,
-      user_id: userId,
-      start_date: start,
-      end_date: end,
-      paid: paid,
-      prize: prize,
-      note: note
+      event_id: data.eventId,
+      user_id: data.userId,
+      start_date: data.start,
+      end_date: data.end,
+      paid: data.paid,
+      prize: data.prize,
+      note: data.note
     })
     .into('participants');
 
