@@ -90,3 +90,13 @@ export function getUser(username) {
     return query;
 };
   
+export function getParticipantEvents(userId) {
+  const query = knex
+    .table('participants')
+    .where({
+      user_id: userId
+    })
+    .innerJoin('events', 'event_id', '=', 'id');
+
+    return query;
+};
