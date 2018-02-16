@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
 import bodyParser from 'body-parser';
+import * as knex from './utils/knex';
 
 dotenv.config();
 const app = express();
@@ -14,5 +15,13 @@ app.use(bodyParser.json());
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/../client/static/index.html'));
 });
+
+app.post('/post/user', (req, res) => {
+  knex.postUser(req.body)
+    .then(() => res.sendStatus(201))
+    .catch(err => {
+      console.log(err);
+    });
+})
 
 app.listen(process.env.PORT);
