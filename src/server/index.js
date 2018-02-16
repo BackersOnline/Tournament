@@ -22,10 +22,18 @@ app.post('/post/user', (req, res) => {
     .catch(err => {
       console.log(err);
     });
-})
+});
 
 app.post('/post/event', (req, res) => {
   knex.postEvent(req.body)
+    .then(() => res.sendStatus(201))
+    .catch(err => {
+      console.log(err);
+    });
+});
+
+app.post('/post/tournament', (req, res) => {
+  knex.postTournament(req.body)
     .then(() => res.sendStatus(201))
     .catch(err => {
       console.log(err);
