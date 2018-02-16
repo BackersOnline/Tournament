@@ -66,4 +66,14 @@ app.get('/get/user/:name', (req, res) => {
     });
 });
 
+app.get('/get/participant/events/:id', (req, res) => {
+  knex.getParticipantEvents(req.params.id)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
 app.listen(process.env.PORT);
