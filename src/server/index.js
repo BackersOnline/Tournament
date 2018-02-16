@@ -48,4 +48,12 @@ app.post('/post/game', (req, res) => {
     });
 });
 
+app.post('/post/participant', (req, res) => {
+  knex.postParticipant(req.body)
+    .then(() => res.sendStatus(201))
+    .catch(err => {
+      console.log(err);
+    });
+});
+
 app.listen(process.env.PORT);
