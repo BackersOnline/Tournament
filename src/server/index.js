@@ -40,4 +40,12 @@ app.post('/post/tournament', (req, res) => {
     });
 });
 
+app.post('/post/game', (req, res) => {
+  knex.postGame(req.body)
+    .then(() => res.sendStatus(201))
+    .catch(err => {
+      console.log(err);
+    });
+});
+
 app.listen(process.env.PORT);
