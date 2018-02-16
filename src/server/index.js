@@ -24,4 +24,12 @@ app.post('/post/user', (req, res) => {
     });
 })
 
+app.post('/post/event', (req, res) => {
+  knex.postEvent(req.body)
+    .then(() => res.sendStatus(201))
+    .catch(err => {
+      console.log(err);
+    });
+});
+
 app.listen(process.env.PORT);
