@@ -6,13 +6,14 @@ import * as knex from './utils/knex';
 
 dotenv.config();
 const app = express();
+const router = express.Router();
 
 app.use(express.static(__dirname + '/../client/static/'));
 app.use(express.static(__dirname + '/../client/static/build'));
 app.use(express.static(__dirname + '/../client/static/images'));
 app.use(bodyParser.json());
 
-app.get('*', (req, res) => {
+router.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/../client/static/index.html'));
 });
 

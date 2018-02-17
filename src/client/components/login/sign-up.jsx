@@ -34,8 +34,6 @@ class SignUp extends Component {
       }
     });
 
-    console.log(address)
-
     auth.createUserWithEmailAndPassword(email, password)
       .then(() => {
         Store.dispatch({type: 'LOG_IN', payload: true});

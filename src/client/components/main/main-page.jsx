@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import Web3 from 'web3';
 import { firebase, auth } from '../../../utils/firebase';
+import Store from '../../../store';
 
 class MainPage extends Component {
   constructor(props) {
@@ -20,6 +21,25 @@ class MainPage extends Component {
 
     this.createInstance = this.createContract.at(this.props.contract.createAddress);
     this.tournamentInstance = this.tournamentContract.at(this.props.contract.tournyAddress);
+  }
+
+  componentWillMount() {
+    let username;
+    let data;
+
+    if (auth.currentUser !== null) {
+      username = auth.currentUser.displayName;
+
+      fetch('/get/user/' + username)
+        .then(res => res.json())
+        .then(data => {
+          console.log(data)
+          Store.dispatch({ type: 'RECEIVED_USER_INFO', payload: data });
+      })
+      .catch(err => {
+        throw new Error(err);
+      });
+    }
   }
 
   render() {
