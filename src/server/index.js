@@ -67,8 +67,28 @@ app.get('/get/user/:name', (req, res) => {
     });
 });
 
-app.get('/get/participant/events/:id', (req, res) => {
-  knex.getParticipantEvents(req.params.id)
+app.get('/get/participant/upcoming/events/:id', (req, res) => {
+  knex.getParticipantUpcomingEvents(req.params.id)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
+app.get('/get/participant/pending/events/:id', (req, res) => {
+  knex.getParticipantPendingEvents(req.params.id)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+});
+
+app.get('/get/participant/past/events/:id', (req, res) => {
+  knex.getParticipantPastEvents(req.params.id)
     .then(data => {
       res.json(data);
     })

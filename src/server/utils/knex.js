@@ -17,7 +17,7 @@ export function postUser(data) {
     })
     .into('users');
 
-    return query;
+  return query;
 };
 
 export function postEvent(data) {
@@ -33,7 +33,7 @@ export function postEvent(data) {
     })
     .into('events');
   
-    return query;
+  return query;
 };
 
 export function postTournament(data) {
@@ -47,7 +47,7 @@ export function postTournament(data) {
     })
     .into('tournaments');
 
-    return query;
+  return query;
 };
   
 export function postGame(data) {
@@ -61,7 +61,7 @@ export function postGame(data) {
     })
     .into('game');
 
-    return query;
+  return query;
 };
 
 export function postParticipant(data) {
@@ -77,7 +77,7 @@ export function postParticipant(data) {
     })
     .into('participants');
 
-    return query;
+  return query;
 };
 
 export function getUser(username) {
@@ -87,16 +87,45 @@ export function getUser(username) {
       username: username
     });
 
-    return query;
+  return query;
 };
   
-export function getParticipantEvents(userId) {
+export function getParticipantPendingEvents(userId) {
+  const query = knex
+    .table('participants')
+    .where({
+      user_id: userId,
+      registered: false
+    })
+    .innerJoin('events', 'event_id', '=', 'events.id');
+
+  return query;
+};
+
+export function getParticipantUpcomingEvents(userId) {
+  const currentDate = Date.now();
+  const query = knex 
+    .table('participants')
+    .where({
+      user_id: userId,
+      registered: true,
+      
+    })
+    .andWhere('start_time', '>', currentDate)
+    .innerJoin('events', 'event_id', '=', 'events.id');
+
+  return query;
+};
+
+export function getParticipantPastEvents(userId) {
+  const currentDate = Date.now();
   const query = knex
     .table('participants')
     .where({
       user_id: userId
     })
-    .innerJoin('events', 'event_id', '=', 'id');
+    .andWhere('start_time', '<', currentDate)
+    .innerJoin('events', 'event_id', '=', 'events.id');
 
-    return query;
+  return query;
 };
