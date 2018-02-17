@@ -4,6 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import Web3 from 'web3';
 import { firebase, auth } from '../../../utils/firebase';
 import Store from '../../../store';
+import UpcomingEvents from '../dashboards/upcoming.jsx';
 
 class MainPage extends Component {
   constructor(props) {
@@ -24,16 +25,10 @@ class MainPage extends Component {
   }
 
   componentWillMount() {
-    let username;
-    let data;
-
     if (auth.currentUser !== null) {
-      username = auth.currentUser.displayName;
-
-      fetch('/get/user/' + username)
+      fetch('/get/user/' + auth.currentUser.displayName)
         .then(res => res.json())
         .then(data => {
-          console.log(data)
           Store.dispatch({ type: 'RECEIVED_USER_INFO', payload: data });
       })
       .catch(err => {
@@ -60,6 +55,11 @@ class MainPage extends Component {
             </div>
           </div>
           <div className="col-sm-12" id="separator">
+          </div>
+          <div className="col-sm-12">
+            <div className="col-sm-4">
+              <UpcomingEvents/>
+            </div>
           </div>
         </div>
       </section>
