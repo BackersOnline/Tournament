@@ -1,17 +1,40 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Web3 from 'web3';
 import Store from '../../../store';
 import { firebase, auth } from '../../../utils/firebase';
 import history from '../../../utils/history';
 
 class SignUp extends Component {
+  constructor() {
+    super()
+
+    if (typeof web3 !== 'undefined') {
+      console.log('Using web3 detected from external source.');
+      this.web3 = new Web3(web3.currentProvider);
+    } else {
+      console.log('Error: No web3 detected. Please install an external source such as Metamask.');
+    }
+  }
+
   handleSignUp(e) {
     e.preventDefault();
 
     const username = this.refs.username.value;
     const email = this.refs.signUpEmail.value;
     const password = this.refs.signUpPassword.value;
+    let address 
+
+    web3.eth.getAccounts((err, res) => {
+      if (!err) {
+        address = res[0];
+      } else {
+        throw new Error(err);
+      }
+    });
+
+    console.log(address)
 
     auth.createUserWithEmailAndPassword(email, password)
       .then(() => {
@@ -21,7 +44,17 @@ class SignUp extends Component {
             displayName: username
           })
           .then(() => {
-            console.log('Sign up successful.')
+            fetch('/post/user', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ 
+                username: username,
+                email: email,
+                walletAddress: address
+              })
+            });
+
+            console.log('Sign up successful.');
           })
         })
         history.push('/');
