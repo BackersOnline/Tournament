@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 class UpcomingEvents extends Component {
   constructor(props) {
     super(props)
-    this.state = { events: [] };
+    this.state = { events: null };
   }
 
   shouldComponentUpdate() {
-    if (this.state.events.length < 1) {
+    if (this.state.events === null) {
       return true;
     } else {
       return false;
@@ -38,7 +38,7 @@ class UpcomingEvents extends Component {
         </div>
         <div>
           {(() => {
-            if (this.state.events.length < 1) {
+            if (this.state.events === null || this.state.events.length < 1) {
               return (
                 <div>
                   <h6>No Upcoming Events.</h6>
