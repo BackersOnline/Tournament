@@ -5,6 +5,7 @@ import Web3 from 'web3';
 import { firebase, auth } from '../../../utils/firebase';
 import Store from '../../../store';
 import UpcomingEvents from '../dashboards/upcoming.jsx';
+import PendingEvents from '../dashboards/pending.jsx';
 
 class MainPage extends Component {
   constructor(props) {
@@ -59,6 +60,7 @@ class MainPage extends Component {
           <div className="col-sm-12">
             <div className="col-sm-4">
               <UpcomingEvents/>
+              <PendingEvents/>
             </div>
           </div>
         </div>

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-class UpcomingEvents extends Component {
-  constructor(props) {
-    super(props)
+class PendingEvents extends Component {
+  constructor() {
+    super()
     this.state = { events: null };
   }
 
@@ -17,7 +17,7 @@ class UpcomingEvents extends Component {
 
   componentDidUpdate() {
     if (this.props.validUser.userInfo !== null) {
-      fetch('/get/participant/upcoming/events/' + this.props.validUser.userInfo[0].id)
+      fetch('/get/participant/pending/events/' + this.props.validUser.userInfo[0].id)
       .then(res => res.json())
       .then(data => {
         this.setState({events: data});
@@ -33,7 +33,7 @@ class UpcomingEvents extends Component {
       <div className="col-sm-12">
         <div>
           <header>
-            <h5>Upcoming Events</h5>
+            <h5>Pending Events</h5>
           </header>
         </div>
         <div>
@@ -41,7 +41,7 @@ class UpcomingEvents extends Component {
             if (this.state.events === null || this.state.events.length < 1) {
               return (
                 <div>
-                  <h6>No Upcoming Events.</h6>
+                  <h6>No Pending Events.</h6>
                 </div>
               )
             } else {
@@ -71,6 +71,6 @@ class UpcomingEvents extends Component {
 
 function mapStateToProps(store) {
   return {validUser: store.signIn};
-}
+}; 
 
-export default connect(mapStateToProps)(UpcomingEvents);
+export default connect(mapStateToProps)(PendingEvents);
