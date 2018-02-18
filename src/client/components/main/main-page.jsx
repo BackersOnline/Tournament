@@ -6,6 +6,7 @@ import { firebase, auth } from '../../../utils/firebase';
 import Store from '../../../store';
 import UpcomingEvents from '../dashboards/upcoming.jsx';
 import PendingEvents from '../dashboards/pending.jsx';
+import PreviousEvents from '../dashboards/previous.jsx';
 
 class MainPage extends Component {
   constructor(props) {
@@ -61,6 +62,7 @@ class MainPage extends Component {
             <div className="col-sm-4">
               <UpcomingEvents/>
               <PendingEvents/>
+              <PreviousEvents/>
             </div>
           </div>
         </div>

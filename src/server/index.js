@@ -87,7 +87,7 @@ app.get('/get/participant/pending/events/:id', (req, res) => {
     })
 });
 
-app.get('/get/participant/past/events/:id', (req, res) => {
+app.get('/get/participant/previous/events/:id', (req, res) => {
   knex.getParticipantPastEvents(req.params.id)
     .then(data => {
       res.json(data);
