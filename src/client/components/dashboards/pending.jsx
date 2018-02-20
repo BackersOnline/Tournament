@@ -48,6 +48,11 @@ class PendingEvents extends Component {
               return (
                 <table>
                   <tbody>
+                    <tr>
+                      <th>Event</th>
+                      <th>Role</th>
+                      <th>Date</th>
+                    </tr>
                     {
                       this.state.events.map((row, index) => {
                         return (
