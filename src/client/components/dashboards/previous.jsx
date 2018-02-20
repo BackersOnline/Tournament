@@ -53,6 +53,7 @@ class PreviousEvents extends Component {
                         return (
                           <tr key={index}>
                             <td>{row.title}</td>
+                            <td>{row.role}</td>
                             <td>{row.start_date}</td>
                           </tr>
                         )
