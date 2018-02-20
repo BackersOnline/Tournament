@@ -8,6 +8,7 @@ CREATE TABLE participants (
   start_date text,
   end_date   text,
   registered boolean,
+  role       text,
   paid       int,
   prize      int,
   note       text
