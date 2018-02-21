@@ -98,7 +98,8 @@ export function getParticipantPendingEvents(userId) {
       registered: false
     })
     .innerJoin('events', 'event_id', '=', 'events.id')
-    .orderBy('events.id', 'asc');
+    .orderBy('events.id', 'asc')
+    .limit(5);
 
   return query;
 };
@@ -114,7 +115,8 @@ export function getParticipantUpcomingEvents(userId) {
     })
     .andWhere('start_time', '>', currentDate)
     .innerJoin('events', 'event_id', '=', 'events.id')
-    .orderBy('events.id', 'asc');
+    .orderBy('events.id', 'asc')
+    .limit(5);
 
   return query;
 };
@@ -128,7 +130,8 @@ export function getParticipantPastEvents(userId) {
     })
     .andWhere('start_time', '<', currentDate)
     .innerJoin('events', 'event_id', '=', 'events.id')
-    .orderBy('events.id', 'asc');
+    .orderBy('events.id', 'asc')
+    .limit(5);
 
   return query;
 };
