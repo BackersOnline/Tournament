@@ -7,6 +7,11 @@ import Store from '../../../store';
 import UpcomingEvents from '../dashboards/upcoming.jsx';
 import PendingEvents from '../dashboards/pending.jsx';
 import PreviousEvents from '../dashboards/previous.jsx';
+import MainHeader from './header.jsx';
+import NavBox from './nav-box.jsx';
+import NavBar from './navbar.jsx';
+import JoinTournament from '../tournament/join.jsx';
+import Joined from '../tournament/joined.jsx';
 
 class MainPage extends Component {
   constructor(props) {
@@ -44,25 +49,43 @@ class MainPage extends Component {
       return <Redirect to="/login"/>
     } 
     return (
-      <section className="container-fluid">
-        <div className="row">
-          <div className="col-sm-12" id="main-header">
-            <div className="main-navs-box">
-              <div className="inline-navs">
-                <Link to="/join/tournament">Join Game</Link>
+      <section id="main-header">
+        <MainHeader/>
+        <div id="main-navbar">
+          <NavBar/>
+        </div>
+        <div id="main-display">
+          <div className="container">
+            <div className="col-sm-12" id="main-display-box">
+              <div className="col-sm-6">
+                <div className="dashboard-container">
+                  <UpcomingEvents/>
+                </div>
+                <div className="dashboard-container">
+                  <PendingEvents/>
+                </div>
+                <div className="dashboard-container">
+                  <PreviousEvents/>
+                </div>
               </div>
-              <div className="inline-navs">
-                <Link to="/create/tournament">Create Game</Link>
-              </div>
-            </div>
-          </div>
-          <div className="col-sm-12" id="separator">
-          </div>
-          <div className="col-sm-12">
-            <div className="col-sm-4">
-              <UpcomingEvents/>
-              <PendingEvents/>
-              <PreviousEvents/>
+              <NavBox>
+                {(() => {
+                  switch (this.props.nav.view) {
+                    case 'NULL':
+                      return
+                    case 'CREATE':
+                      return
+                    case 'JOIN':
+                      return <JoinTournament/>;
+                    case 'HAS_JOINED':
+                      return <Joined/>;
+                    case 'MANAGE':
+                      return
+                    default:
+                      return
+                  }
+                })()}
+              </NavBox>
             </div>
           </div>
         </div>
@@ -74,8 +97,9 @@ class MainPage extends Component {
 function mapStateToProps(store) {
   return {
     contract: store.contract,
-    validUser: store.signIn
-  }
+    validUser: store.signIn,
+    nav: store.nav
+  };
 };
 
-export default connect(mapStateToProps)(MainPage)
+export default connect(mapStateToProps)(MainPage);

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Web3 from 'web3';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import NavBar from './nav-bar.jsx';
+import Store from '../../../store';
 
 class JoinTournament extends Component {
   constructor(props) {
@@ -31,14 +31,14 @@ class JoinTournament extends Component {
     }, (err, res) => {
       if (!err) {
         if (res === true) {
-          console.log('Successfully joined tournament.')          
-          this.tournamentInstance = this.tournamentContract.at(address) 
-          Store.dispatch({type: 'HAS_JOINED'})         
+          console.log('Successfully joined tournament.');         
+          Store.dispatch({type: 'UPDATE_TOURNY_ADDRESS', payload: address});
+          Store.dispatch({ type: 'CHANGE_VIEW', payload: 'HAS_JOINED' });         
         } else {
-          alert('ERROR: \n' + 'Tournament address does not exist.')
+          alert('ERROR: \n' + 'Tournament address does not exist.');
         }
       } else {
-        alert(err)
+        alert(err);
       }
     })
   }
@@ -47,13 +47,12 @@ class JoinTournament extends Component {
       return <Redirect to="/login"/>
     }
     return (
-      <section className="container-fluid jumbo">
+      <section className="jumbo">
         <div className="row">
-          <NavBar/>
-          <div className="col-sm-4 col-sm-offset-4 text-center">
+          <div className="col-sm-8 col-sm-offset-2 text-center">
             <form className="form-text form-margin" onSubmit={this.handleJoinSubmit.bind(this)}>
               <div className="form-group">
-                <label className="label-margin">Tournament Address</label>
+                <label className="label-margin">Event Address</label>
                 <input ref="address" type="text" className="form-control"/>
               </div>
               <div className="btn-margin">

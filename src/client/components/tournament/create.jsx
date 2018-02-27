@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Web3 from 'web3';
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux';
-import NavBar from './nav-bar.jsx';
 
 class CreateTournament extends Component {
   constructor(props) {
@@ -55,9 +54,8 @@ class CreateTournament extends Component {
       return <Redirect to="/login"/>
     }
     return (
-      <section className="container-fluid jumbo">
+      <section className="jumbo">
         <div className="row">
-          <NavBar/>
           <div className="col-sm-4 col-sm-offset-4 text-center">
             <form className="form-text form-margin" onSubmit={this.handleCreateSubmit.bind(this)}>
               <div className="form-group">
