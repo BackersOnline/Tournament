@@ -21,18 +21,19 @@ export function postUser(data) {
 };
 
 export function postEvent(data) {
-  const query = knex
+  const query = knex('events')
+    .returning('id')    
     .insert({
       organizer_id: data.organizer,
       title: data.title,
       public: data.isPublic,
       start_date: data.start,
       end_date: data.end,
+      address: data.address,
       location: data.location,
       terms: data.terms
-    })
-    .into('events');
-  
+    });
+    
   return query;
 };
 
@@ -40,7 +41,9 @@ export function postTournament(data) {
   const query = knex
     .insert({
       event_id: data.eventId,
+      tournament_id: data.tournamentId,
       max_participants: data.max,
+      min_participants: data.min,
       buyin: data.buyIn,
       guarantee: data.guarantee,
       terms: data.terms
@@ -54,6 +57,7 @@ export function postGame(data) {
   const query = knex  
     .insert({
       event_id: data.eventId,
+      game_id: data.gameId,
       max_participants: data.max,
       max_buyin: data.maxBuyIn,
       min_buyin: data.minBuyIn,

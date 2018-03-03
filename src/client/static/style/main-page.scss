@@ -1,18 +1,14 @@
-#main-header::before {
+#main-header {
   background-image: linear-gradient(to right, #4b74b3, #4f4f8d);
   background-size: cover;
   height: 65px;
   width: 100%;
   top: 0;
   left: 0;
-  display: block;
-  position: absolute;
-  z-index: -1;
-  content: '';
 }
 
 #main-navbar {
-  height: 50px;
+  height: 35px;
   width: 100%;
   border-bottom: 1.3px solid lightgrey;
 }
@@ -41,8 +37,13 @@
   height: 54px;
 }
 
+#nav-container {
+ margin-bottom: 0;
+ margin-top: 5px;
+}
+
 .navs {
-  margin-top: 15px;
+  vertical-align: middle;
   display: inline-block;
   margin-left: 5px;
   margin-right: 5px;

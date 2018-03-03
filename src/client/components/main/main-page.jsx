@@ -12,6 +12,8 @@ import NavBox from './nav-box.jsx';
 import NavBar from './navbar.jsx';
 import JoinTournament from '../tournament/join.jsx';
 import Joined from '../tournament/joined.jsx';
+import CreateTournament from '../tournament/create.jsx';
+import Loader from '../loader.jsx';
 
 class MainPage extends Component {
   constructor(props) {
@@ -49,8 +51,10 @@ class MainPage extends Component {
       return <Redirect to="/login"/>
     } 
     return (
-      <section id="main-header">
-        <MainHeader/>
+      <section>
+        <div id="main-header">
+          <MainHeader/>
+        </div>
         <div id="main-navbar">
           <NavBar/>
         </div>
@@ -74,13 +78,17 @@ class MainPage extends Component {
                     case 'NULL':
                       return
                     case 'CREATE':
-                      return
+                      return <CreateTournament/>
                     case 'JOIN':
                       return <JoinTournament/>;
                     case 'HAS_JOINED':
                       return <Joined/>;
                     case 'MANAGE':
                       return
+                    case 'CLEAR': 
+                      return
+                    case 'LOADER':
+                      return <Loader/>
                     default:
                       return
                   }
