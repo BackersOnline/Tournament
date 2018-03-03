@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
 import bodyParser from 'body-parser';
+import helmet from 'helmet';
 import * as knex from './utils/knex';
 
 dotenv.config();
@@ -11,6 +12,7 @@ const router = express.Router();
 app.use(express.static(__dirname + '/../client/static/'));
 app.use(express.static(__dirname + '/../client/static/build'));
 app.use(express.static(__dirname + '/../client/static/images'));
+app.use(helmet());
 app.use(bodyParser.json());
 
 router.get('*', (req, res) => {
@@ -27,8 +29,9 @@ app.post('/post/user', (req, res) => {
 
 app.post('/post/event', (req, res) => {
   knex.postEvent(req.body)
-    .then(() => res.sendStatus(201))
+    .then(data => res.json(data))
     .catch(err => {
+      res.sendStatus(500);
       console.log(err);
     });
 });

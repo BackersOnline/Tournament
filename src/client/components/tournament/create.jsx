@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Web3 from 'web3';
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux';
+import { firebase, auth } from '../../../utils/firebase';
+import Store from '../../../store';
+import DateWrapper from './dates-wrapper.jsx';
 
 class CreateTournament extends Component {
   constructor(props) {
@@ -21,14 +24,85 @@ class CreateTournament extends Component {
     this.tournamentInstance = this.tournamentContract.at(this.props.contract.tournyAddress)
   }
 
+  createTournamentId(title) {
+    return auth.currentUser.displayName + '_' + title;
+  }
+
+  getUserId() {
+    return fetch('/get/user/' + auth.currentUser.displayName)
+      .then(res => res.json())
+      .then(data => {
+        return data[0].id;
+      });
+  }
+
+  postTournament(eventId, tournyTitle, maxParticipants, minParticipants, buyIn) {
+    const tournyId = this.createTournamentId(tournyTitle);
+
+    const data = {
+      tournamentId: tournyId,
+      max: maxParticipants,
+      min: minParticipants,
+      buyIn: buyIn,
+      eventId: eventId
+    };
+
+    fetch('/post/tournament', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+  }
+
+  postEvent(organizerId, eventTitle, isPublic, startDate, address) {
+    const data = {
+      organizer: organizerId,
+      title: eventTitle,
+      isPublic: isPublic,
+      start: startDate,
+      address: address
+    };
+
+    return fetch('/post/event', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(data => {
+      return data[0];
+    });
+
+  }
+
+  eventType(isPublic) {
+    const types = document.getElementsByName('type');
+    let eventType;
+
+    for (let i = 0; i < types.length; i++) {
+      if (types[i].checked) {
+        eventType= types[i].value;
+      }
+    }
+
+    if (eventType === 'public') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   handleCreateSubmit(e) {
     e.preventDefault()
     const title = this.refs.title.value
-    const participants = this.refs.participants.value 
+    const maxParticipants = this.refs.maxParticipants.value 
+    const minParticipants = this.refs.minParticipants.value
     const fee = web3.toWei(this.refs.fee.value, 'ether')
-    const surcharge = web3.toWei(this.refs.surcharge.value, 'ether')
+    const buyIn = this.refs.fee.value
+    const isPublic = this.eventType();
+    const date = this.props.date.date;
     
-    this.createInstance.createNewTournament(title, participants, fee, surcharge, {
+    this.createInstance.createNewTournament(title, maxParticipants, fee, 0, {
       gas: 3000000
     }, (err, res) => {
       if (!err) {
@@ -38,51 +112,77 @@ class CreateTournament extends Component {
       }
     })
 
-    const event = this.createInstance.TournamentAddress((error, result) => {
+    Store.dispatch({ type: 'CHANGE_VIEW', payload: 'LOADER' });
+    
+    const event = this.createInstance.TournamentAddress((error, result) => {            
       if (!error) {
+        this.getUserId()
+          .then(userId => {
+            this.postEvent(userId, title, isPublic, date)
+              .then(eventId => {
+                this.postTournament(eventId, title, maxParticipants, minParticipants, buyIn, result.args.tourny);                        
+              })
+          });
+        
         this.tournamentInstance = this.tournamentContract.at(result.args.tourny)
         alert('IMPORTANT: \n' + 'If you are sender \n' + result.args.organizer + '\n, please share this address to invite players to your tournament: \n' + result.args.tourny)
-        Store.dispatch({type: 'ORGANIZER_ONLY'})
+        Store.dispatch({type: 'CHANGE_VIEW', payload: 'CLEAR'});
       }
       else {
-        alert(error)
+        Store.dispatch({ type: 'CHANGE_VIEW', payload: 'CLEAR' });
+        alert(error);
       }
     })
   }
+
   render() {
     if (!this.props.validUser.user) {
       return <Redirect to="/login"/>
     }
     return (
       <section className="jumbo">
-        <div className="row">
-          <div className="col-sm-4 col-sm-offset-4 text-center">
+          <div className="row">
             <form className="form-text form-margin" onSubmit={this.handleCreateSubmit.bind(this)}>
-              <div className="form-group">
-                <label className="label-margin">Tournament Name</label>
-                <input ref="title" type="text" className="form-control"/>
+              <div className="col-sm-12 form-element-margins">
+                <div className="form-group">
+                  <input ref="title" type="text" className="form-control" placeholder="Event Title"/>
+                </div>
               </div>
-              <div className="form-group">
-                <label className="label-margin">Maximum Number of Participants</label>
-                <input ref="participants" type="number" className="form-control"/>
+              <div className="col-sm-6 form-element-margins">
+                <div className="form-group">
+                  <input ref="maxParticipants" type="number" className="form-control" placeholder="Max Participants"/>
+                </div>
               </div>
-              <div className="form-group">
-                <label className="label-margin">Set the Tournament Entry Fee</label>
-                <input ref="fee" type="number" step="0.00000001" className="form-control"/>
+              <div className="col-sm-6 form-element-margins">
+                <div className="form-group">
+                  <input ref="minParticipants" type="number" className="form-control" placeholder="Minimum Participants"/>
+                </div>
               </div>
-              <div className="form-group">
-                <label className="label-margin">Set the Tournament Surcharge</label>
-                <input ref="surcharge" type="number" step="0.00000001" className="form-control"/>
+              <div className="col-sm-6 form-element-margins">
+                <label className="label-margin">Public or Private Event?</label>
+                <div>
+                  <input type="radio" name="type" value="public"/> Public 
+                  <span>       </span>   
+                  <input type="radio" name="type" value="private"/> Private
+                </div>
               </div>
-              <div className="btn-margin">
-                <button type="submit" className="btn btn-light" name="action">Create</button>
+              <div className="col-sm-6 form-element-margins">
+                <div className="form-group">
+                  <input ref="fee" type="number" step="0.00001" className="form-control" placeholder="Event Entry Fee"/>
+                </div>
+              </div>
+              <div className="col-sm-6 form-element-margins">
+                <div className="">
+                  <DateWrapper getDate={this.getDate}/>
+                </div>
+              </div>
+              <div className="col-sm-6 form-element-margins">
+                <div className="btn-margin">
+                  <button type="submit" className="btn btn-light" name="action">Create</button>
+                </div>
               </div>
             </form>
-            <div>
-              <p id="created-nav" onClick={this.handleCreatedClick}>Already Organized a Tournament?</p>
-            </div>
           </div>
-        </div>
       </section>
     )
   }
@@ -91,7 +191,8 @@ class CreateTournament extends Component {
 function mapStateToProps(store) {
   return {
     contract: store.contract,
-    validUser: store.signIn
+    validUser: store.signIn,
+    date: store.date
   }
 };
 

@@ -7,6 +7,8 @@ import './client/static/style/main.scss';
 import './client/static/style/login.scss';
 import './client/static/style/main-page.scss';
 import './client/static/style/web3.scss';
+import './client/static/style/loader.scss';
+import 'react-dates/lib/css/_datepicker.css';
 
 render (
   <Provider store={Store}>

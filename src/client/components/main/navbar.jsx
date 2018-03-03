@@ -10,18 +10,21 @@ class NavBar extends Component {
   handleManageClick() {
     Store.dispatch({ type: 'CHANGE_VIEW', payload: 'MANAGE' });
   }
+
+  handleCreateClick() {
+    Store.dispatch({ type: 'CHANGE_VIEW', payload: 'CREATE' });
+  }
   
   render() {
     return (
-      <div class="container">
-        <div class="row">
-          <div className="col-sm-12" id="main-navbar">
-            <ul>
-              <li className="navs">
-                <Link to="/create/tournament">Create Event</Link>
-              </li>
-              <li className="navs" onClick={this.handleJoinClick}>Join Event</li>
-              <li className="navs" onClick={this.handleManageClick}>Manage Event</li>          
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-12">
+            <ul id="nav-container">
+              <li className="navs" onClick={this.handleCreateClick}>Create</li>
+              <li className="navs" onClick={this.handleJoinClick}>Join</li>
+              <li className="navs" onClick={this.handleManageClick}>Manage</li>
+              <li className="navs">Search</li>          
             </ul>
           </div>
         </div>

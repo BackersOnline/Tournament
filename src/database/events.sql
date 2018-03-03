@@ -7,6 +7,7 @@ CREATE TABLE events (
   public       boolean,
   start_date   text,
   end_date     text,
+  address      text,
   location     text,
   terms        text
 );
