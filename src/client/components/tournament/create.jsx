@@ -28,14 +28,6 @@ class CreateTournament extends Component {
     return auth.currentUser.displayName + '_' + title;
   }
 
-  getUserId() {
-    return fetch('/get/user/' + auth.currentUser.displayName)
-      .then(res => res.json())
-      .then(data => {
-        return data[0].id;
-      });
-  }
-
   postTournament(eventId, tournyTitle, maxParticipants, minParticipants, buyIn) {
     const tournyId = this.createTournamentId(tournyTitle);
 
@@ -116,12 +108,9 @@ class CreateTournament extends Component {
     
     const event = this.createInstance.TournamentAddress((error, result) => {            
       if (!error) {
-        this.getUserId()
-          .then(userId => {
-            this.postEvent(userId, title, isPublic, date)
-              .then(eventId => {
-                this.postTournament(eventId, title, maxParticipants, minParticipants, buyIn, result.args.tourny);                        
-              })
+        this.postEvent(this.props.validUser.userInfo[0].id, title, isPublic, date, result.args.tourny)
+          .then(eventId => {
+            this.postTournament(eventId, title, maxParticipants, minParticipants, buyIn);                        
           });
         
         this.tournamentInstance = this.tournamentContract.at(result.args.tourny)
@@ -168,7 +157,7 @@ class CreateTournament extends Component {
               </div>
               <div className="col-sm-6 form-element-margins">
                 <div className="form-group">
-                  <input ref="fee" type="number" step="0.00001" className="form-control" placeholder="Event Entry Fee"/>
+                  <input ref="fee" type="number" step="0.00001" className="form-control" placeholder="Event Entry Fee (Ether)"/>
                 </div>
               </div>
               <div className="col-sm-6 form-element-margins">

@@ -14,6 +14,8 @@ import JoinTournament from '../tournament/join.jsx';
 import Joined from '../tournament/joined.jsx';
 import CreateTournament from '../tournament/create.jsx';
 import Loader from '../loader.jsx';
+import ManageEvent from '../tournament/manage.jsx';
+import ManagingEvent from '../tournament/managing.jsx';
 
 class MainPage extends Component {
   constructor(props) {
@@ -84,7 +86,9 @@ class MainPage extends Component {
                     case 'HAS_JOINED':
                       return <Joined/>;
                     case 'MANAGE':
-                      return
+                      return <ManageEvent/>
+                    case 'MANAGING':
+                      return <ManagingEvent/>
                     case 'CLEAR': 
                       return
                     case 'LOADER':
