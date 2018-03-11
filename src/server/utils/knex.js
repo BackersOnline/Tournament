@@ -139,3 +139,25 @@ export function getParticipantPastEvents(userId) {
 
   return query;
 };
+
+export function getEventAndOrganizer(id, address) {
+  const query = knex
+    .table('events')
+    .where({
+      organizer_id: id,
+      address: address
+    });
+
+  return query;
+}
+
+export function getUserAddress(userName) {
+  const query = knex  
+    .table('users')
+    .where({
+      username: userName
+    })
+    .select('default_address');
+    
+  return query;
+}

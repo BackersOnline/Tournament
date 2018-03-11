@@ -100,4 +100,18 @@ app.get('/get/participant/previous/events/:id', (req, res) => {
     });
 });
 
+app.get('/check/organizer/:id/event/:address', (req, res) => {
+  knex.getEventAndOrganizer(req.params.id, req.params.address)
+    .then(data => res.json(data))
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+app.get('/get/user/address/:address', (req, res) => {
+  knex.getUserAddress(req.params.address) 
+    .then(data => res.json(data))
+    .catch(err => console.log(err));
+});
+
 app.listen(process.env.PORT);
