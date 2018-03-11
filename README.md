@@ -30,7 +30,7 @@ Follow the command prompts to clone the repository from Github:
 $ git clone https://github.com/BackersOnline/Tournament.git
 $ cd Tournament/
 $ yarn install
-yarn test-app
+$ yarn test-app
 ```
 
 Now open browser to localhost:3000.
