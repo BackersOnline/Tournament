@@ -1,0 +1,18 @@
+# Install in /lib/systemd/system root.root 644
+# Update WorkingDirectory to match your actual installatin
+# Useful coomands
+#  sudo systemctl start yarn-start &
+#  sudo systemctl stop yarn-start
+#  systemctl status yarn-start.service
+
+[Unit]
+Description=Start yarn for Tournament
+DefaultDependencies=no
+Wants=network.target
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/yarn test-app
+WorkingDirectory=/home/ubuntu/Tournament
+RemainAfterExit=yes
